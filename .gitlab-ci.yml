@@ -19,7 +19,7 @@ build:
   tags:
     - gitlab-org-docker
   services:
-    - name: registry.gitlab.com/junte/docker-hub/docker:19-dind
+    - name: docker:dind
       entrypoint: [ "env", "-u", "DOCKER_HOST" ]
       command: [ "dockerd-entrypoint.sh" ]
   variables:
