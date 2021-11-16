@@ -1,0 +1,44 @@
+version: '2.4'
+
+services:
+  nginx:
+    image: nginx:1.17
+    ports:
+      - 9999:8080
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./www:/var/www
+
+  couchdb:
+    image: couchdb:3.0.1
+    ports:
+    -  5984:5984
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: admin
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+      - ./config:/opt/couchdb/etc/local.d
+
+  proxy:
+    build:
+      context: ../
+      dockerfile: ./develop/Dockerfile
+    ports:
+      - 40000:40000
+    environment:
+      PROXY_COUCHDB_URL: "http://couchdb:5984"
+      PROXY_COUCHDB_USER: "admin"
+      PROXY_PG_USER: "admin"
+      PROXY_PG_PASSWORD: "229835"
+      PROXY_PG_HOST: "postgres"
+      PROXY_PG_PORT: "5432"
+      PROXY_PG_DATABASE: "spec_projector"
+
+volumes:
+  couchdb_data:
+
+networks:
+  default:
+    external:
+      name: local
