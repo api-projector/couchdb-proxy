@@ -19,7 +19,13 @@ build:
   tags:
     - gitlab-org-docker
   services:
-    - registry.gitlab.com/junte/docker-hub/docker:19-dind
+    - name: registry.gitlab.com/junte/docker-hub/docker:19-dind
+      entrypoint: [ "env", "-u", "DOCKER_HOST" ]
+      command: [ "dockerd-entrypoint.sh" ]
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker pull $DOCKER_CACHE_IMAGE || true
