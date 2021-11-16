@@ -16,6 +16,8 @@ lint_dockerfile:
 
 build:
   stage: build
+  tags:
+    - docker
   services:
     - registry.gitlab.com/junte/docker-hub/docker:19-dind
   script:
