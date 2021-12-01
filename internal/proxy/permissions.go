@@ -21,13 +21,6 @@ const (
 		SELECT count(*)
 		FROM projects_project projects
 		WHERE projects.db_name = $1
-			AND (projects.is_public
-				OR projects.owner_id = $2
-				OR EXISTS (SELECT 1 
-						FROM projects_projectmember members
-						WHERE members.project_id = projects.id AND members.user_id = $2
-		 			)
-		       )
 	`
 )
 
