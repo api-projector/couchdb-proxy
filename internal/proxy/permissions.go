@@ -53,7 +53,7 @@ func checkAccess(conn *pgxpool.Conn, database string, auth string) (allowed bool
 	}
 
 	var rowsCount *int
-	err = conn.QueryRow(context.Background(), checkProjectAccessSql, database, user).Scan(&rowsCount)
+	err = conn.QueryRow(context.Background(), checkProjectAccessSql, database).Scan(&rowsCount)
 	if err != nil {
 		return
 	}
