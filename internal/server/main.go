@@ -42,6 +42,8 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	log.Printf("new request: auth=%s, db=%s", authToken, database)
+
 	err = couchDbProxy.ProxyRequest(pgPool, authToken, database, writer, request)
 	if err != nil {
 		switch err.(type) {
