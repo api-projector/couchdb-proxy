@@ -1,3 +1,4 @@
 develop/config/docker.ini
 .idea
 bin
+.DS_Store
