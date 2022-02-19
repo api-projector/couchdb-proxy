@@ -27,12 +27,12 @@ jobs:
       id: meta
       uses: docker/metadata-action@v1
       with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: ${{ env.GITHUB_SHA }}
         labels: ${{ steps.meta.outputs.labels }}
