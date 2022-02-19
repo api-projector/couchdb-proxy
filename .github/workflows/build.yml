@@ -4,7 +4,7 @@ on: [ pull_request, push ]
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ env.REGISTRY }}/${{ github.repository }}
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v1
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE_NAME }}
           tag-sha: true
 
       - name: Build and push Docker image
@@ -37,5 +37,5 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:_buildcache
+          cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:_buildcache,mode=max
