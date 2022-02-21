@@ -25,11 +25,9 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v1
+        uses: docker/metadata-action@v3
         with:
           images: ${{ env.IMAGE_NAME }}
-          tag-sha: true
-          tag-latest: false
           flavor: |
             latest: false
 
