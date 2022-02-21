@@ -29,6 +29,7 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tag-sha: true
+          tag-latest: false
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
