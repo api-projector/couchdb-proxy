@@ -12,7 +12,7 @@ RUN GOOS=linux GO111MODULE=on go build -i -v -a -installsuffix cgo -o app couchd
 
 ###
 
-FROM alpine:3.15
+FROM alpine:3
 RUN apk add --no-cache \
     && addgroup -S -g 10001 app \
     && adduser -S -u 10001 \
